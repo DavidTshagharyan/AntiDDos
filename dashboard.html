@@ -5,19 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DDoS Monitoring Dashboard - DMT Protection</title>
     <link rel="stylesheet" href="css/styles.css">
-    <link rel="icon" type="image/webp" href="../logo.webp">
+    <link rel="icon" type="image/webp" href="logo.webp">
 </head>
 <body>
     <!-- Navigation Bar -->
     <header>
         <nav class="navbar">
-            <a class="logo" href="dashboard.html">
-                <img src="../logo.webp" alt="DMT Protection logo" class="logo-img">
+            <a class="logo" href="index.html">
+                <img src="logo.webp" alt="DMT Protection logo" class="logo-img">
                 <span>DMT Protection</span>
             </a>
+            <button class="mobile-menu-toggle" aria-label="Toggle menu">☰</button>
             <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
                 <li><a href="dashboard.html" class="active">Dashboard</a></li>
-                <li><a href="#settings">Settings</a></li>
+                <li><a href="detect.html">Detection Tool</a></li>
+                <li><a href="mitigate.html">Mitigation Guide</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="about.html">About</a></li>
             </ul>
             <div class="auth-links">
                 <button class="auth-btn login" onclick="logoutUser()">Logout</button>

@@ -116,10 +116,22 @@ function highlightActiveNav() {
         }
     });
 
-    // If user is not logged in, point dashboard link to login with redirect
-    const dashboardLink = qs('.nav-links a[href="dashboard.html"]');
-    if (dashboardLink && !isLoggedIn()) {
-        dashboardLink.setAttribute('href', 'login.html?redirect=dashboard.html');
+    // Add dashboard link to navigation if logged in
+    const navLinksContainer = qs('.nav-links');
+    if (navLinksContainer && isLoggedIn()) {
+        // Check if dashboard link already exists
+        let dashboardLink = qs('.nav-links a[href="dashboard.html"]');
+        if (!dashboardLink) {
+            const dashboardItem = document.createElement('li');
+            dashboardItem.innerHTML = '<a href="dashboard.html">Dashboard</a>';
+            navLinksContainer.insertBefore(dashboardItem, navLinksContainer.firstChild);
+        }
+    } else if (navLinksContainer && !isLoggedIn()) {
+        // Remove dashboard link if not logged in
+        const dashboardLink = qs('.nav-links a[href="dashboard.html"]');
+        if (dashboardLink) {
+            dashboardLink.parentElement.remove();
+        }
     }
 }
 
@@ -911,6 +923,33 @@ function initContactForm() {
 // PAGE INITIALIZATION
 // ============================================
 
+// ============================================
+// MOBILE MENU TOGGLE
+// ============================================
+
+/**
+ * Initialize mobile menu toggle
+ */
+function initMobileMenu() {
+    const mobileToggle = document.querySelector('.mobile-menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    
+    if (mobileToggle && navLinks) {
+        mobileToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileToggle.classList.toggle('active');
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navLinks.contains(e.target) && !mobileToggle.contains(e.target)) {
+                navLinks.classList.remove('active');
+                mobileToggle.classList.remove('active');
+            }
+        });
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     initTheme();
     const themeToggle = $('theme-toggle');
@@ -919,6 +958,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     highlightActiveNav();
+    initMobileMenu();
     
     // Initialize page-specific functionality
     const currentPage = window.location.pathname.split('/').pop() || 'index.html';
@@ -965,22 +1005,38 @@ function initNetworkCanvas() {
     if (!canvas) return;
     
     const ctx = canvas.getContext('2d');
-    canvas.width = canvas.offsetWidth;
-    canvas.height = canvas.offsetHeight;
+    
+    function resizeCanvas() {
+        const rect = canvas.getBoundingClientRect();
+        canvas.width = rect.width;
+        canvas.height = rect.height || 400;
+    }
+    
+    resizeCanvas();
+    
+    window.addEventListener('resize', () => {
+        resizeCanvas();
+        createNodes();
+    });
     
     const nodes = [];
     const nodeCount = 30;
     
     // Create nodes
-    for (let i = 0; i < nodeCount; i++) {
-        nodes.push({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
-            vx: (Math.random() - 0.5) * 2,
-            vy: (Math.random() - 0.5) * 2,
-            radius: 3 + Math.random() * 2
-        });
+    function createNodes() {
+        nodes.length = 0;
+        for (let i = 0; i < nodeCount; i++) {
+            nodes.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: (Math.random() - 0.5) * 2,
+                vy: (Math.random() - 0.5) * 2,
+                radius: 3 + Math.random() * 2
+            });
+        }
     }
+    
+    createNodes();
     
     function animate() {
         const isLight = document.body.classList.contains('light-mode');
@@ -993,6 +1049,12 @@ function initNetworkCanvas() {
             
             if (node.x < 0 || node.x > canvas.width) node.vx *= -1;
             if (node.y < 0 || node.y > canvas.height) node.vy *= -1;
+            
+            // Reinitialize if canvas was resized
+            if (node.x > canvas.width || node.y > canvas.height) {
+                node.x = Math.random() * canvas.width;
+                node.y = Math.random() * canvas.height;
+            }
             
             ctx.beginPath();
             ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
