@@ -169,19 +169,30 @@ function registerUser(username, email, password) {
  * Login user
  */
 function loginUser(email, password) {
+    // Accept any credentials for demo purposes
     const username = email.split('@')[0] || 'user';
-    const user = { id: Date.now(), username, email };
+    const user = { 
+        id: Date.now(), 
+        username, 
+        email,
+        loginTime: new Date().toISOString()
+    };
     localStorage.setItem('currentUser', JSON.stringify(user));
-    return { success: true, message: 'Login successful', user };
+    return { success: true, message: 'Login successful! Redirecting...', user };
 }
 
 /**
- * Logout user
+ * Logout user (global function for onclick handlers)
  */
 function logoutUser() {
-    localStorage.removeItem('currentUser');
-    window.location.href = 'index.html';
+    if (confirm('Are you sure you want to logout?')) {
+        localStorage.removeItem('currentUser');
+        window.location.href = 'index.html';
+    }
 }
+
+// Make logoutUser globally accessible
+window.logoutUser = logoutUser;
 
 /**
  * Check if user is logged in
@@ -335,44 +346,88 @@ function showSuccess(field, message) {
 
 function initLoginPage() {
     const loginForm = $('login-form');
-    if (!loginForm) return;
+    if (!loginForm) {
+        console.error('Login form not found');
+        return;
+    }
     
     const emailField = $('login-email');
     const passwordField = $('login-password');
-    const redirectTarget = getQueryParam('redirect') || 'index.html';
     
-    // Real-time password strength for password field
+    if (!emailField || !passwordField) {
+        console.error('Login form fields not found');
+        return;
+    }
+    
+    // Real-time password strength for password field (optional)
     if (passwordField) {
         passwordField.addEventListener('input', (e) => {
-            updatePasswordStrength(e.target.value);
+            const password = e.target.value;
+            if (password.length > 0) {
+                updatePasswordStrength(password);
+            }
         });
     }
     
-    loginForm.addEventListener('submit', (e) => {
+    loginForm.addEventListener('submit', function(e) {
         e.preventDefault();
+        e.stopPropagation();
         
         const email = emailField.value.trim();
         const password = passwordField.value;
         const redirectTarget = getQueryParam('redirect') || 'dashboard.html';
         
-        // Minimal presence check
-        if (!email || !password) {
-            showError(emailField, 'Email and password are required');
+        // Clear previous messages
+        const errorMessages = loginForm.querySelectorAll('.error-message');
+        const successMessages = loginForm.querySelectorAll('.success-message');
+        errorMessages.forEach(msg => {
+            msg.classList.remove('show');
+            msg.textContent = '';
+        });
+        successMessages.forEach(msg => {
+            msg.classList.remove('show');
+            msg.textContent = '';
+        });
+        
+        // Validation
+        if (!email) {
+            showError(emailField, 'Email is required');
+            emailField.focus();
             return;
         }
         
-        // Attempt login (accept any credentials)
-        const result = loginUser(email, password);
+        if (!validateEmail(email)) {
+            showError(emailField, 'Please enter a valid email address');
+            emailField.focus();
+            return;
+        }
         
-        if (result.success) {
-            showSuccess(emailField, result.message);
-            setTimeout(() => {
-                window.location.href = redirectTarget;
-            }, 1000);
-        } else {
-            showError(emailField, result.message);
+        if (!password) {
+            showError(passwordField, 'Password is required');
+            passwordField.focus();
+            return;
+        }
+        
+        // Attempt login (accept any credentials for demo)
+        try {
+            const result = loginUser(email, password);
+            
+            if (result.success) {
+                showSuccess(emailField, result.message);
+                // Redirect after short delay
+                setTimeout(() => {
+                    window.location.href = redirectTarget;
+                }, 1500);
+            } else {
+                showError(emailField, result.message || 'Login failed');
+            }
+        } catch (error) {
+            console.error('Login error:', error);
+            showError(emailField, 'An error occurred. Please try again.');
         }
     });
+    
+    console.log('Login page initialized');
 }
 
 // ============================================
@@ -381,51 +436,95 @@ function initLoginPage() {
 
 function initRegisterPage() {
     const registerForm = $('register-form');
-    if (!registerForm) return;
+    if (!registerForm) {
+        console.error('Register form not found');
+        return;
+    }
     
     const usernameField = $('register-username');
     const emailField = $('register-email');
     const passwordField = $('register-password');
     const confirmPasswordField = $('register-confirm-password');
-    const redirectTarget = getQueryParam('redirect') || 'dashboard.html';
+    
+    if (!usernameField || !emailField || !passwordField || !confirmPasswordField) {
+        console.error('Register form fields not found');
+        return;
+    }
     
     // Real-time password strength
     if (passwordField) {
         passwordField.addEventListener('input', (e) => {
-            updatePasswordStrength(e.target.value);
+            const password = e.target.value;
+            if (password.length > 0) {
+                updatePasswordStrength(password);
+            }
         });
     }
     
-    registerForm.addEventListener('submit', (e) => {
+    registerForm.addEventListener('submit', function(e) {
         e.preventDefault();
+        e.stopPropagation();
         
         const username = usernameField.value.trim();
         const email = emailField.value.trim();
         const password = passwordField.value;
         const confirmPassword = confirmPasswordField.value;
+        const redirectTarget = getQueryParam('redirect') || 'dashboard.html';
+        
+        // Clear previous messages
+        const errorMessages = registerForm.querySelectorAll('.error-message');
+        const successMessages = registerForm.querySelectorAll('.success-message');
+        errorMessages.forEach(msg => {
+            msg.classList.remove('show');
+            msg.textContent = '';
+        });
+        successMessages.forEach(msg => {
+            msg.classList.remove('show');
+            msg.textContent = '';
+        });
         
         // Validate all fields
-        const usernameValid = validateField(usernameField, { required: true, minLength: 3 });
-        const emailValid = validateField(emailField, { required: true, email: true });
-        const passwordValid = validateField(passwordField, { required: true, minLength: 8 });
-        const confirmPasswordValid = validateField(confirmPasswordField, { required: true, match: 'register-password' });
+        let isValid = true;
         
-        if (!usernameValid || !emailValid || !passwordValid || !confirmPasswordValid) {
+        if (!validateField(usernameField, { required: true, minLength: 3 })) {
+            isValid = false;
+        }
+        
+        if (!validateField(emailField, { required: true, email: true })) {
+            isValid = false;
+        }
+        
+        if (!validateField(passwordField, { required: true, minLength: 8 })) {
+            isValid = false;
+        }
+        
+        if (!validateField(confirmPasswordField, { required: true, match: 'register-password' })) {
+            isValid = false;
+        }
+        
+        if (!isValid) {
             return;
         }
         
         // Attempt registration
-        const result = registerUser(username, email, password);
-        
-        if (result.success) {
-            showSuccess(emailField, result.message);
-            setTimeout(() => {
-                window.location.href = `login.html?redirect=${encodeURIComponent(redirectTarget)}`;
-            }, 1500);
-        } else {
-            showError(emailField, result.message);
+        try {
+            const result = registerUser(username, email, password);
+            
+            if (result.success) {
+                showSuccess(emailField, result.message + ' Redirecting to login...');
+                setTimeout(() => {
+                    window.location.href = `login.html?redirect=${encodeURIComponent(redirectTarget)}`;
+                }, 1500);
+            } else {
+                showError(emailField, result.message || 'Registration failed');
+            }
+        } catch (error) {
+            console.error('Registration error:', error);
+            showError(emailField, 'An error occurred. Please try again.');
         }
     });
+    
+    console.log('Register page initialized');
 }
 
 /**
@@ -962,30 +1061,49 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Initialize page-specific functionality
     const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    const pageName = currentPage.toLowerCase();
     
-    switch (currentPage) {
+    console.log('Current page:', pageName);
+    
+    switch (pageName) {
         case 'login.html':
+        case 'login':
+            console.log('Initializing login page');
             initLoginPage();
             break;
         case 'register.html':
+        case 'register':
+            console.log('Initializing register page');
             initRegisterPage();
             break;
         case 'detect.html':
+        case 'detect':
+            console.log('Initializing detection page');
             initDetectionPage();
             break;
         case 'mitigate.html':
+        case 'mitigate':
+            console.log('Initializing mitigate page');
             initAccordions();
             initMitigationSimulation();
             break;
         case 'resources.html':
+        case 'resources':
+            console.log('Initializing resources page');
             loadResources();
             break;
         case 'about.html':
+        case 'about':
+            console.log('Initializing about page');
             initContactForm();
             break;
         case 'dashboard.html':
+        case 'dashboard':
+            console.log('Initializing dashboard page');
             populateDashboardProfile();
             break;
+        default:
+            console.log('No specific page handler for:', pageName);
     }
     
     if (isHomePage()) {
