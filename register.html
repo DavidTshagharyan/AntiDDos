@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - DMT Protection</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" type="image/webp" href="../logo.webp">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header>
+        <nav class="navbar">
+            <a class="logo" href="index.html">
+                <img src="../logo.webp" alt="DMT Protection logo" class="logo-img">
+                <span>DMT Protection</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="detect.html">Detection Tool</a></li>
+                <li><a href="mitigate.html">Mitigation Guide</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+            <div class="auth-links">
+                <a href="login.html" class="auth-btn login">Login</a>
+                <a href="register.html" class="auth-btn register">Register</a>
+                <button class="theme-toggle" id="theme-toggle">Light Mode</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="form-container">
+            <h1 class="text-center">Create Account</h1>
+            <p class="text-center" style="margin-bottom: 2rem; color: var(--text-secondary);">
+                Register for a new account to get started
+            </p>
+
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="register-username">Username</label>
+                    <input 
+                        type="text" 
+                        id="register-username" 
+                        placeholder="Choose a username" 
+                        required
+                        autocomplete="username"
+                        minlength="3"
+                    >
+                    <div class="error-message"></div>
+                    <div class="success-message"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="register-email">Email Address</label>
+                    <input 
+                        type="email" 
+                        id="register-email" 
+                        placeholder="your.email@example.com" 
+                        required
+                        autocomplete="email"
+                    >
+                    <div class="error-message"></div>
+                    <div class="success-message"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="register-password">Password</label>
+                    <input 
+                        type="password" 
+                        id="register-password" 
+                        placeholder="Create a strong password" 
+                        required
+                        autocomplete="new-password"
+                        minlength="8"
+                    >
+                    <div class="password-strength">
+                        <div id="password-strength-bar" class="password-strength-bar"></div>
+                    </div>
+                    <small style="color: var(--text-secondary); display: block; margin-top: 0.5rem;">
+                        Password must be at least 8 characters long
+                    </small>
+                    <div class="error-message"></div>
+                    <div class="success-message"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="register-confirm-password">Confirm Password</label>
+                    <input 
+                        type="password" 
+                        id="register-confirm-password" 
+                        placeholder="Confirm your password" 
+                        required
+                        autocomplete="new-password"
+                    >
+                    <div class="error-message"></div>
+                    <div class="success-message"></div>
+                </div>
+
+                <button type="submit" class="btn" style="width: 100%;">Register</button>
+            </form>
+
+            <p class="text-center" style="margin-top: 1.5rem; color: var(--text-secondary);">
+                Already have an account<a href="login.html">Login here</a>
+            </p>
+
+            <div style="margin-top: 2rem; padding: 1rem; background-color: var(--bg-tertiary); border-radius: 8px; border: 1px solid var(--border-color);">
+                <p style="font-size: 0.9rem; color: var(--text-secondary); margin: 0;">
+                    <strong>Note:</strong> This is a demo authentication system using LocalStorage. 
+                    Passwords are encoded (not encrypted) for demonstration purposes only. 
+                    Do not use real passwords in this demo.
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 DMT Protection. All rights reserved. | Educational Purpose Only</p>
+    </footer>
+
+    <script src="js/scripts.js"></script>
+</body>
+</html>
+

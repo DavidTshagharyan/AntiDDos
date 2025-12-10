@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - DMT Protection</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" type="image/webp" href="../logo.webp">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header>
+        <nav class="navbar">
+            <a class="logo" href="index.html">
+                <img src="../logo.webp" alt="DMT Protection logo" class="logo-img">
+                <span>DMT Protection</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="detect.html">Detection Tool</a></li>
+                <li><a href="mitigate.html">Mitigation Guide</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+            <div class="auth-links">
+                <a href="login.html" class="auth-btn login">Login</a>
+                <a href="register.html" class="auth-btn register">Register</a>
+                <button class="theme-toggle" id="theme-toggle">Light Mode</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="about-container">
+            <h1 class="text-center">About DMT Protection</h1>
+            
+            <!-- About Section -->
+            <div class="about-section">
+                <h2>Our Mission</h2>
+                <p>The DMT Protection is an educational platform designed to help individuals and organizations understand, detect, and mitigate Distributed Denial of Service (DDoS) attacks. Our goal is to provide accessible tools and resources that demystify cybersecurity threats and empower users to protect their digital assets.</p>
+                
+                <h2>What We Offer</h2>
+                <ul style="margin-left: 2rem; color: var(--text-secondary);">
+                    <li><strong>Detection Tools:</strong> Simulate and analyze DDoS attack patterns</li>
+                    <li><strong>Mitigation Guides:</strong> Comprehensive strategies for defending against attacks</li>
+                    <li><strong>Educational Resources:</strong> Curated content from leading cybersecurity organizations</li>
+                    <li><strong>Interactive Learning:</strong> Hands-on simulations and visualizations</li>
+                </ul>
+                
+                <h2>Disclaimer</h2>
+                <p style="color: var(--accent-warning);"><strong>Important:</strong> This platform is for educational purposes only. The detection and mitigation tools provided are simulations and should not be used as a replacement for professional cybersecurity services. Always consult with qualified security professionals for production environments.</p>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="contact-form">
+                <h2>Get in Touch</h2>
+                <p>Have questions, suggestions, or feedbackWe'd love to hear from you!</p>
+                
+                <form id="contact-form">
+                    <div class="form-group">
+                        <label for="contact-name">Name</label>
+                        <input type="text" id="contact-name" required>
+                        <div class="error-message"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="contact-email">Email</label>
+                        <input type="email" id="contact-email" required>
+                        <div class="error-message"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="contact-message">Message</label>
+                        <textarea id="contact-message" required></textarea>
+                        <div class="error-message"></div>
+                    </div>
+                    
+                    <button type="submit" class="btn">Send Message</button>
+                </form>
+            </div>
+
+            <!-- Map Placeholder -->
+            <div class="map-placeholder">
+                <p>Map Location Placeholder</p>
+                <p style="font-size: 0.9rem; margin-top: 0.5rem;">Interactive map would be displayed here</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 DMT Protection. All rights reserved. | Educational Purpose Only</p>
+    </footer>
+
+    <script src="js/scripts.js"></script>
+</body>
+</html>
+

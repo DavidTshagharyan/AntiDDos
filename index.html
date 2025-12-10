@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DMT Protection - Home</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" type="image/webp" href="../logo.webp">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header>
+        <nav class="navbar">
+            <a class="logo" href="index.html">
+                <img src="../logo.webp" alt="DMT Protection logo" class="logo-img">
+                <span>DMT Protection</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="detect.html">Detection Tool</a></li>
+                <li><a href="mitigate.html">Mitigation Guide</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+            <div class="auth-links">
+                <a href="login.html" class="auth-btn login">Login</a>
+                <a href="register.html" class="auth-btn register">Register</a>
+                <button class="theme-toggle" id="theme-toggle">Light Mode</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>Protect Your Website Against DDoS Attacks</h1>
+            <p>Learn, detect, and mitigate Distributed Denial of Service threats with our comprehensive cybersecurity platform.</p>
+            <div class="hero-buttons">
+                <a href="detect.html" class="cta-btn">Check My Site</a>
+                <a href="mitigate.html" class="btn btn-secondary">Mitigation Guide</a>
+                <a href="resources.html" class="btn btn-secondary">Resources</a>
+                <a href="about.html" class="btn btn-secondary">About</a>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features">
+            <div class="feature-card">
+                <h2>Detection Tool</h2>
+                <p>Simulate DDoS attack detection by analyzing traffic patterns, identifying anomalies, and visualizing network activity in real-time. Our advanced detection system can identify potential threats before they cause damage.</p>
+                <a href="detect.html" class="btn btn-secondary mt-2">Try Detection Tool</a>
+            </div>
+            <div class="feature-card">
+                <h2>Mitigation Strategies</h2>
+                <p>Learn comprehensive defense strategies including rate limiting, Web Application Firewalls (WAF), Content Delivery Networks (CDN), IP filtering, and bot detection. Interactive simulations help you understand each technique.</p>
+                <a href="mitigate.html" class="btn btn-secondary mt-2">View Guide</a>
+            </div>
+            <div class="feature-card">
+                <h2>Educational Resources</h2>
+                <p>Access curated resources, guides, and tools from leading cybersecurity organizations. Stay updated with the latest DDoS attack vectors and defense mechanisms.</p>
+                <a href="resources.html" class="btn btn-secondary mt-2">Browse Resources</a>
+            </div>
+        </section>
+
+        <!-- About DDoS Section -->
+        <section class="about-section">
+            <h2>Understanding DDoS Attacks</h2>
+            <p>A <strong>Distributed Denial of Service (DDoS)</strong> attack is a malicious attempt to disrupt normal traffic of a targeted server, service, or network by overwhelming it with a flood of internet traffic.</p>
+            
+            <h3>Types of DDoS Attacks:</h3>
+            <ul style="margin-left: 2rem; color: var(--text-secondary);">
+                <li><strong>Volumetric Attacks:</strong> Overwhelm the target with massive amounts of traffic</li>
+                <li><strong>Protocol Attacks:</strong> Exploit weaknesses in network protocols (e.g., SYN floods)</li>
+                <li><strong>Application Layer Attacks:</strong> Target specific applications or services (e.g., HTTP floods)</li>
+            </ul>
+            
+            <p style="margin-top: 1.5rem;">Our platform provides tools and resources to help you understand, detect, and defend against these threats effectively.</p>
+        </section>
+
+        <!-- Network Visualization -->
+        <section class="hero-animation">
+            <canvas id="network-canvas"></canvas>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 DMT Protection. All rights reserved. | Educational Purpose Only</p>
+    </footer>
+
+    <script src="js/scripts.js"></script>
+</body>
+</html>

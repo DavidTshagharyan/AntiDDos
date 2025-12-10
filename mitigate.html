@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mitigation Guide - DMT Protection</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" type="image/webp" href="../logo.webp">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header>
+        <nav class="navbar">
+            <a class="logo" href="index.html">
+                <img src="../logo.webp" alt="DMT Protection logo" class="logo-img">
+                <span>DMT Protection</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="detect.html">Detection Tool</a></li>
+                <li><a href="mitigate.html">Mitigation Guide</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+            <div class="auth-links">
+                <a href="login.html" class="auth-btn login">Login</a>
+                <a href="register.html" class="auth-btn register">Register</a>
+                <button class="theme-toggle" id="theme-toggle">Light Mode</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="about-container">
+            <h1 class="text-center">DDoS Mitigation Guide</h1>
+            <p class="text-center" style="margin-bottom: 3rem;">Learn about various mitigation strategies and how to implement them effectively.</p>
+
+            <!-- Accordion Sections -->
+            <div class="accordion">
+                <div class="accordion-header">
+                    <h3>Rate Limiting</h3>
+                    <span class="accordion-icon">+</span>
+                </div>
+                <div class="accordion-content">
+                    <p><strong>Rate limiting</strong> restricts the number of requests a client can make within a specific time period. This prevents attackers from overwhelming your server with too many requests.</p>
+                    <h4>Implementation:</h4>
+                    <ul style="margin-left: 2rem; color: var(--text-secondary);">
+                        <li>Set limits per IP address (e.g., 100 requests per minute)</li>
+                        <li>Implement progressive delays for repeated violations</li>
+                        <li>Use tools like Nginx rate limiting, Cloudflare, or AWS WAF</li>
+                        <li>Monitor and adjust limits based on legitimate traffic patterns</li>
+                    </ul>
+                    <h4>Best Practices:</h4>
+                    <ul style="margin-left: 2rem; color: var(--text-secondary);">
+                        <li>Start with conservative limits and adjust based on analytics</li>
+                        <li>Implement different limits for different endpoints</li>
+                        <li>Use whitelists for trusted IPs</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <div class="accordion-header">
+                    <h3>Web Application Firewall (WAF)</h3>
+                    <span class="accordion-icon">+</span>
+                </div>
+                <div class="accordion-content">
+                    <p>A <strong>Web Application Firewall (WAF)</strong> filters, monitors, and blocks HTTP traffic to and from a web application. It protects against various attacks including DDoS, SQL injection, and XSS.</p>
+                    <h4>Key Features:</h4>
+                    <ul style="margin-left: 2rem; color: var(--text-secondary);">
+                        <li>Traffic filtering based on rules and signatures</li>
+                        <li>Behavioral analysis to detect anomalies</li>
+                        <li>IP reputation checking</li>
+                        <li>Geographic blocking capabilities</li>
+                    </ul>
+                    <h4>Popular WAF Solutions:</h4>
+                    <ul style="margin-left: 2rem; color: var(--text-secondary);">
+                        <li>Cloudflare WAF</li>
+                        <li>AWS WAF</li>
+                        <li>ModSecurity</li>
+                        <li>Azure Application Gateway WAF</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <div class="accordion-header">
+                    <h3>Content Delivery Network (CDN)</h3>
+                    <span class="accordion-icon">+</span>
+                </div>
+                <div class="accordion-content">
+                    <p>A <strong>Content Delivery Network (CDN)</strong> distributes your content across multiple geographically dispersed servers, reducing the load on your origin server and providing DDoS protection.</p>
+                    <h4>Benefits:</h4>
+                    <ul style="margin-left: 2rem; color: var(--text-secondary);">
+                        <li>Absorbs attack traffic before it reaches your origin server</li>
+                        <li>Provides built-in DDoS mitigation</li>
+                        <li>Improves website performance and load times</li>
+                        <li>Offers additional security features</li>
+                    </ul>
+                    <h4>CDN Providers:</h4>
+                    <ul style="margin-left: 2rem; color: var(--text-secondary);">
+                        <li>Cloudflare</li>
+                        <li>Amazon CloudFront</li>
+                        <li>Fastly</li>
+                        <li>Akamai</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <div class="accordion-header">
+                    <h3>IP Blacklist/Whitelist</h3>
+                    <span class="accordion-icon">+</span>
+                </div>
+                <div class="accordion-content">
+                    <p><strong>IP filtering</strong> allows you to block or allow traffic from specific IP addresses or IP ranges. This is an effective way to prevent known malicious sources from accessing your services.</p>
+                    <h4>Implementation:</h4>
+                    <ul style="margin-left: 2rem; color: var(--text-secondary);">
+                        <li>Maintain a blacklist of known malicious IPs</li>
+                        <li>Use threat intelligence feeds to update blacklists</li>
+                        <li>Create whitelists for trusted partners and services</li>
+                        <li>Implement at firewall, server, or application level</li>
+                    </ul>
+                    <h4>Considerations:</h4>
+                    <ul style="margin-left: 2rem; color: var(--text-secondary);">
+                        <li>Attackers may use multiple IPs (distributed attacks)</li>
+                        <li>Regularly update blacklists to stay current</li>
+                        <li>Monitor for false positives</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="accordion">
+                <div class="accordion-header">
+                    <h3>Bot Filtering</h3>
+                    <span class="accordion-icon">+</span>
+                </div>
+                <div class="accordion-content">
+                    <p><strong>Bot filtering</strong> distinguishes between legitimate users and automated bots, blocking malicious bot traffic while allowing search engine crawlers and other legitimate bots.</p>
+                    <h4>Techniques:</h4>
+                    <ul style="margin-left: 2rem; color: var(--text-secondary);">
+                        <li>CAPTCHA challenges for suspicious traffic</li>
+                        <li>JavaScript challenges (many bots can't execute JS)</li>
+                        <li>Behavioral analysis (mouse movements, typing patterns)</li>
+                        <li>User-Agent and fingerprinting analysis</li>
+                        <li>Rate-based detection</li>
+                    </ul>
+                    <h4>Tools:</h4>
+                    <ul style="margin-left: 2rem; color: var(--text-secondary);">
+                        <li>reCAPTCHA</li>
+                        <li>hCaptcha</li>
+                        <li>Cloudflare Bot Management</li>
+                        <li>Custom behavioral analysis systems</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Mitigation Simulation -->
+            <div class="mitigation-simulation">
+                <h2>Interactive Mitigation Simulation</h2>
+                <p>Select mitigation strategies below and see how they affect attack mitigation effectiveness.</p>
+                
+                <div class="simulation-controls">
+                    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                        <input type="checkbox" value="Rate Limiting" style="width: auto;">
+                        <span>Rate Limiting</span>
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                        <input type="checkbox" value="WAF" style="width: auto;">
+                        <span>Web Application Firewall</span>
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                        <input type="checkbox" value="CDN" style="width: auto;">
+                        <span>Content Delivery Network</span>
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                        <input type="checkbox" value="IP Filtering" style="width: auto;">
+                        <span>IP Blacklist/Whitelist</span>
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                        <input type="checkbox" value="Bot Filtering" style="width: auto;">
+                        <span>Bot Filtering</span>
+                    </label>
+                </div>
+                
+                <button id="apply-mitigation-btn" class="btn">Apply Mitigations</button>
+                
+                <div id="simulation-result" class="simulation-result"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 DMT Protection. All rights reserved. | Educational Purpose Only</p>
+    </footer>
+
+    <script src="js/scripts.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - DMT Protection</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" type="image/webp" href="../logo.webp">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header>
+        <nav class="navbar">
+            <a class="logo" href="index.html">
+                <img src="../logo.webp" alt="DMT Protection logo" class="logo-img">
+                <span>DMT Protection</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="detect.html">Detection Tool</a></li>
+                <li><a href="mitigate.html">Mitigation Guide</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+            <div class="auth-links">
+                <a href="login.html" class="auth-btn login">Login</a>
+                <a href="register.html" class="auth-btn register">Register</a>
+                <button class="theme-toggle" id="theme-toggle">Light Mode</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="form-container">
+            <h1 class="text-center">Login</h1>
+            <p class="text-center" style="margin-bottom: 2rem; color: var(--text-secondary);">
+                Sign in to access your account
+            </p>
+
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-email">Email Address</label>
+                    <input 
+                        type="email" 
+                        id="login-email" 
+                        placeholder="your.email@example.com" 
+                        required
+                        autocomplete="email"
+                    >
+                    <div class="error-message"></div>
+                    <div class="success-message"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input 
+                        type="password" 
+                        id="login-password" 
+                        placeholder="Enter your password" 
+                        required
+                        autocomplete="current-password"
+                    >
+                    <div class="password-strength">
+                        <div id="password-strength-bar" class="password-strength-bar"></div>
+                    </div>
+                    <div class="error-message"></div>
+                    <div class="success-message"></div>
+                </div>
+
+                <button type="submit" class="btn" style="width: 100%;">Login</button>
+            </form>
+
+            <p class="text-center" style="margin-top: 1.5rem; color: var(--text-secondary);">
+                Don't have an account<a href="register.html">Register here</a>
+            </p>
+
+            <div style="margin-top: 2rem; padding: 1rem; background-color: var(--bg-tertiary); border-radius: 8px; border: 1px solid var(--border-color);">
+                <p style="font-size: 0.9rem; color: var(--text-secondary); margin: 0;">
+                    <strong>Note:</strong> This is a demo authentication system using LocalStorage. 
+                    Passwords are encoded (not encrypted) for demonstration purposes only.
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 DMT Protection. All rights reserved. | Educational Purpose Only</p>
+    </footer>
+
+    <script src="js/scripts.js"></script>
+</body>
+</html>
+
